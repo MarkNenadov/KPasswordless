@@ -1,0 +1,5 @@
+TODO
+
+* Implement /signin/verify endpoint
+* Implement /credentials/list endpoint
+* Implement /credentials/delete endpoint
