@@ -2,7 +2,7 @@
 
 A Kotlin client for the passwordless.dev API (https://passwordless.dev/).
 
-Note: If you want to use the test case, you will need to fill in tesrt/resources/kpasswordless.properties
+Note: If you want to use the test case, you will need to fill in test/resources/kpasswordless.properties
 
 ### Service ###
 
