@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.pythonbyte</groupId>
-    <artifactId>haveibeenKwned</artifactId>
-    <version>0.1.1</version>
+    <artifactId>kpasswordless</artifactId>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
-    <name>HaveIBeenKwned</name>
-    <description>A Kotlin interface to the haveibeenpwned.com API</description>
+    <name>KPasswordless</name>
+    <description>A Kotlin client for the passwordless.dev API</description>
 
     <properties>
         <kotlin.version>1.6.0</kotlin.version>
