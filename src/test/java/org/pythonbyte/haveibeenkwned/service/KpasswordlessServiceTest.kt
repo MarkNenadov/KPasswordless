@@ -34,4 +34,18 @@ class KpasswordlessServiceTest {
         assertTrue( kpasswordlessService.addAliases( privateKey, identity, listOf( "Joe Jones", "yoddle") ) );
     }
 
+    @Test
+    fun testSignIn() {
+        val identity = KPasswordlessIdentity()
+        identity.userId = userId;
+        identity.displayName = displayName;
+        identity.userName = userName;
+
+        val token = kpasswordlessService.registerToken( privateKey, identity );
+
+        val signIn = kpasswordlessService.signin( privateKey, token )
+
+        assertTrue( signIn.isSuccess );
+        System.out.println( signIn.device );
+    }
 }

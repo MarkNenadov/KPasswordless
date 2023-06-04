@@ -79,3 +79,4 @@ outTmp/
 kotlin-ide/
 # Project exclude paths
 /target/
+src/test/resources/kpasswordless.properties
