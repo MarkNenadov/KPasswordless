@@ -2,6 +2,8 @@
 
 A Kotlin client for the passwordless.dev API (https://passwordless.dev/).
 
+Latest release: [v0.0.1](https://github.com/MarkNenadov/KPasswordless/releases/download/v0.0.1/KPasswordless-0.0.1.jar)
+
 Note: Between registerToken() and signIn() you will need to make the front-end signInWtih*() call that the passwordless.dev docs mention.
 Note: If you want to use the test case, you will need to fill in test/resources/kpasswordless.properties
 
