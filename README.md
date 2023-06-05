@@ -2,6 +2,7 @@
 
 A Kotlin client for the passwordless.dev API (https://passwordless.dev/).
 
+Note: Between registerToken() and signIn() you will need to make the front-end signInWtih*() call that the passwordless.dev docs mention.
 Note: If you want to use the test case, you will need to fill in test/resources/kpasswordless.properties
 
 ### Service ###
@@ -27,9 +28,19 @@ KPasswordlessSignIn {
     type: String
     rpId: String
 }
+
+class KpasswordlessCredential {
+    var publicKey: String
+    var userHandle: String
+    var origin: String
+    var country: String
+    var device: String
+}
+
 interface KpasswordlessService {
     fun registerToken( privateKey: String, identity: KPasswordlessIdentity ): String
     fun addAliases( privateKey: String, identity: KPasswordlessIdentity, aliases: List<String> ): Boolean
     fun signin( privateKey: String, token: String ): KPasswordlessSignIn
+    fun deleteCredentials(privateKey: String, credentialId: String): Boolean
 }
 ```

@@ -23,7 +23,7 @@ class KpasswordlessServiceTest {
         identity.displayName = displayName;
         identity.userName = userName;
 
-        System.out.println( "Token is " + kpasswordlessService.registerToken( privateKey, identity ) );
+        println( "Token is " + kpasswordlessService.registerToken( privateKey, identity ) );
     }
 
     @Test
@@ -35,17 +35,22 @@ class KpasswordlessServiceTest {
     }
 
     @Test
-    fun testSignIn() {
+    fun testListCredentials() {
         val identity = KPasswordlessIdentity()
         identity.userId = userId;
-        identity.displayName = displayName;
-        identity.userName = userName;
 
-        val token = kpasswordlessService.registerToken( privateKey, identity );
+        val credentials = kpasswordlessService.listCredentials( privateKey, identity );
 
-        val signIn = kpasswordlessService.signin( privateKey, token )
+        assertTrue( credentials.size > 0 )
 
-        assertTrue( signIn.isSuccess );
-        System.out.println( signIn.device );
+        credentials.forEach { credential ->
+            println("User Handle: " + credential.userHandle)
+            println("Device: " + credential.device)
+        }
+    }
+
+    @Test
+    fun testDeleteCredentials() {
+        assertTrue( kpasswordlessService.deleteCredentials( privateKey, "fjekwfew" ) )
     }
 }

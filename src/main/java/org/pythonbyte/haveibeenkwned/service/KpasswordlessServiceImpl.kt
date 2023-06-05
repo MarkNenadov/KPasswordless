@@ -4,6 +4,7 @@ import com.squareup.okhttp.*
 import org.json.JSONObject
 import org.pythonbyte.haveibeenkwned.domain.KPasswordlessIdentity
 import org.pythonbyte.haveibeenkwned.domain.KPasswordlessSignIn
+import org.pythonbyte.haveibeenkwned.domain.KpasswordlessCredential
 import org.pythonbyte.krux.http.buildRequest
 import org.pythonbyte.krux.json.JsonObject
 import org.pythonbyte.krux.properties.PropertyReader
@@ -48,7 +49,6 @@ class KpasswordlessServiceImpl : KpasswordlessService {
     }
 
     override fun signin( privateKey: String, token: String ): KPasswordlessSignIn {
-        println( "$baseUrl/signin/verify" )
         val request = buildRequest( "$baseUrl/signin/verify", generateHeaders( privateKey ), createPostBody( mapOf( "token" to token ) ) )
         val response = sendRequest( request )
 
@@ -57,7 +57,40 @@ class KpasswordlessServiceImpl : KpasswordlessService {
 
             return KPasswordlessSignIn.create(  responseObject )
         }
-        throw Exception( "Sign In failed with code [" + response.code() + "] [" + response.message() + "]" )
+
+        val responseJson = response.body().string().trim()
+
+        throw Exception( "Sign In failed with code [" + response.code() + "] [" + response.message() + "] json [$responseJson]" )
+    }
+
+    override fun listCredentials( privateKey: String, identity: KPasswordlessIdentity ): List<KpasswordlessCredential> {
+        val request = buildRequest( "$baseUrl/credentials/list?userId=" + identity.userId, generateHeaders( privateKey ), createPostBody( mapOf( "userId" to identity.userId )  ) )
+        val response = sendRequest( request )
+
+        if ( response.code() == 200 ) {
+            val responseJson = response.body().string().trim()
+            val responseObject = JsonObject( JSONObject(responseJson))
+
+            return KpasswordlessCredential.createList( responseObject.getArray("values") )
+        }
+
+        val responseJson = response.body().string().trim()
+
+        throw Exception( "List Credentails failed with code [" + response.code() + "] [" + response.message() + "] json [$responseJson]" )
+    }
+
+    override fun deleteCredentials(privateKey: String, credentialId: String): Boolean {
+        val request = buildRequest("$baseUrl/credentials/delete", generateHeaders( privateKey), createPostBody( mapOf( "credentialId" to credentialId ) ) )
+
+        val response = sendRequest( request )
+
+        if ( response.code() == 200 ) {
+            return true
+        }
+
+        val responseJson = response.body().string().trim()
+
+        throw Exception( "Delete Aliases failed with code [" + response.code() + "] [" + response.message() + "] json [$responseJson]" )
     }
 
 }
