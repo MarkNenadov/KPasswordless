@@ -44,6 +44,8 @@ class KpasswordlessServiceTest {
         assertTrue( credentials.size > 0 )
 
         credentials.forEach { credential ->
+            println("Id: " + credential.id)
+            println("Type: " + credential.type)
             println("User Handle: " + credential.userHandle)
             println("Device: " + credential.device)
         }
