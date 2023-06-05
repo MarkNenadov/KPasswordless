@@ -32,6 +32,8 @@ KPasswordlessSignIn {
 }
 
 class KpasswordlessCredential {
+    var id: String
+    var type: String
     var publicKey: String
     var userHandle: String
     var origin: String
