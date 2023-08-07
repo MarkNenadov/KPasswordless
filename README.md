@@ -48,3 +48,6 @@ interface KpasswordlessService {
     fun deleteCredentials(privateKey: String, credentialId: String): Boolean
 }
 ```
+
+Runtime Exceptions:
+* KpasswordlessServiceException
