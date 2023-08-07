@@ -1,8 +1,8 @@
-package org.pythonbyte.haveibeenkwned.domain
+package org.pythonbyte.kpasswordless.domain
 
 import org.pythonbyte.krux.json.JsonObject
 
-class KpasswordlessCredential {
+class KPasswordlessCredential {
     var id = ""
     var type = ""
     var publicKey = ""
@@ -12,9 +12,9 @@ class KpasswordlessCredential {
     var device = ""
 
     companion object {
-        fun createList(array: List<JsonObject>): List<KpasswordlessCredential> {
+        fun createList(array: List<JsonObject>): List<KPasswordlessCredential> {
             return array.map { jsonObject ->
-                val credential = KpasswordlessCredential()
+                val credential = KPasswordlessCredential()
 
                 val descriptorObject = jsonObject.getObject("descriptor")
 

@@ -1,4 +1,4 @@
-package org.pythonbyte.haveibeenkwned.service.exceptions
+package org.pythonbyte.kpasswordless.service.exceptions
 
 import com.squareup.okhttp.Response;
 

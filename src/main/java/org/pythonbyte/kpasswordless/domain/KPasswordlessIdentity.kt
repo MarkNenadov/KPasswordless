@@ -1,4 +1,4 @@
-package org.pythonbyte.haveibeenkwned.domain
+package org.pythonbyte.kpasswordless.domain
 
 class KPasswordlessIdentity {
     var userName = ""

@@ -1,17 +1,17 @@
-package org.pythonbyte.haveibeenkwned.service
+package org.pythonbyte.kpasswordless.service
 
 import com.squareup.okhttp.*
 import org.json.JSONObject
-import org.pythonbyte.haveibeenkwned.domain.KPasswordlessIdentity
-import org.pythonbyte.haveibeenkwned.domain.KPasswordlessSignIn
-import org.pythonbyte.haveibeenkwned.domain.KpasswordlessCredential
-import org.pythonbyte.haveibeenkwned.service.exceptions.KpasswordlessServiceException
+import org.pythonbyte.kpasswordless.domain.KPasswordlessIdentity
+import org.pythonbyte.kpasswordless.domain.KPasswordlessSignIn
+import org.pythonbyte.kpasswordless.domain.KPasswordlessCredential
+import org.pythonbyte.kpasswordless.service.exceptions.KpasswordlessServiceException
 import org.pythonbyte.krux.http.buildRequest
 import org.pythonbyte.krux.json.JsonObject
 import org.pythonbyte.krux.properties.PropertyReader
 import org.pythonbyte.krux.http.sendRequest
 
-class KpasswordlessServiceImpl : KpasswordlessService {
+class KPasswordlessServiceImpl : KPasswordlessService {
     private val propertiesFile = "/kpasswordless.properties"
     private val propertyReader = PropertyReader(propertiesFile)
     private val baseUrl = propertyReader.get("kpasswordless.baseUrl")
@@ -61,7 +61,7 @@ class KpasswordlessServiceImpl : KpasswordlessService {
         throw KpasswordlessServiceException(response, "Sign in verify")
     }
 
-    override fun listCredentials( privateKey: String, identity: KPasswordlessIdentity ): List<KpasswordlessCredential> {
+    override fun listCredentials( privateKey: String, identity: KPasswordlessIdentity ): List<KPasswordlessCredential> {
         val request = buildRequest( "$baseUrl/credentials/list?userId=${identity.userId}", generateHeaders( privateKey ), createPostBody( mapOf( "userId" to identity.userId )  ) )
         val response = sendRequest( request )
 
@@ -69,7 +69,7 @@ class KpasswordlessServiceImpl : KpasswordlessService {
             val responseJson = response.body().string().trim()
             val responseObject = JsonObject( JSONObject(responseJson))
 
-            return KpasswordlessCredential.createList( responseObject.getArray("values") )
+            return KPasswordlessCredential.createList( responseObject.getArray("values") )
         }
 
         throw KpasswordlessServiceException(response, "List credentials")

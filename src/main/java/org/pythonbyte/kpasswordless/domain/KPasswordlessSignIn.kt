@@ -1,4 +1,4 @@
-package org.pythonbyte.haveibeenkwned.domain
+package org.pythonbyte.kpasswordless.domain
 
 import org.pythonbyte.krux.json.JsonObject
 
