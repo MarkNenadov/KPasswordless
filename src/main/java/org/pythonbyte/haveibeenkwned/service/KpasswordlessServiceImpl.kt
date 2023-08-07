@@ -34,7 +34,7 @@ class KpasswordlessServiceImpl : KpasswordlessService {
             val responseObject = JsonObject( JSONObject( response.body().string().trim() ))
             return responseObject.getString("token")
         }
-        throw Exception( "Register Token failed with code [" + response.code() + "] [" + response.message() + "]" )
+        throw Exception( "Register Token failed with code ${response.code()}] [${response.message()}]" )
     }
 
     override fun addAliases( privateKey: String, identity: KPasswordlessIdentity, aliases: List<String>): Boolean {
@@ -45,7 +45,7 @@ class KpasswordlessServiceImpl : KpasswordlessService {
         if ( response.code() == 200 ) {
             return true
         }
-        throw Exception( "Add Aliases failed with code [" + response.code() + "] [" + response.message() + "]" )
+        throw Exception( "Add Aliases failed with code [${response.code()}] [${response.message()}]" )
     }
 
     override fun signin( privateKey: String, token: String ): KPasswordlessSignIn {
@@ -60,11 +60,11 @@ class KpasswordlessServiceImpl : KpasswordlessService {
 
         val responseJson = response.body().string().trim()
 
-        throw Exception( "Sign In failed with code [" + response.code() + "] [" + response.message() + "] json [$responseJson]" )
+        throw Exception( "Sign In failed with code [${response.code()}] [${response.message()}] json [$responseJson]" )
     }
 
     override fun listCredentials( privateKey: String, identity: KPasswordlessIdentity ): List<KpasswordlessCredential> {
-        val request = buildRequest( "$baseUrl/credentials/list?userId=" + identity.userId, generateHeaders( privateKey ), createPostBody( mapOf( "userId" to identity.userId )  ) )
+        val request = buildRequest( "$baseUrl/credentials/list?userId=${identity.userId}", generateHeaders( privateKey ), createPostBody( mapOf( "userId" to identity.userId )  ) )
         val response = sendRequest( request )
 
         if ( response.code() == 200 ) {
@@ -76,7 +76,7 @@ class KpasswordlessServiceImpl : KpasswordlessService {
 
         val responseJson = response.body().string().trim()
 
-        throw Exception( "List Credentails failed with code [" + response.code() + "] [" + response.message() + "] json [$responseJson]" )
+        throw Exception( "List Credentials failed with code [${response.code()}] [${response.message()}] json [$responseJson]" )
     }
 
     override fun deleteCredentials(privateKey: String, credentialId: String): Boolean {
@@ -88,9 +88,7 @@ class KpasswordlessServiceImpl : KpasswordlessService {
             return true
         }
 
-        val responseJson = response.body().string().trim()
-
-        throw Exception( "Delete Aliases failed with code [" + response.code() + "] [" + response.message() + "] json [$responseJson]" )
+        throw Exception( "Delete Aliases failed with code [${response.code()}] [${response.message()}] json [${response.body().string().trim()}]" )
     }
 
 }
