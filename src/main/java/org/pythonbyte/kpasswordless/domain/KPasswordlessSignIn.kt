@@ -29,7 +29,7 @@ class KPasswordlessSignIn {
             signIn.origin = responseObject.getString( "origin" )
             signIn.nickname = responseObject.getString( "nickname" )
             signIn.type = responseObject.getString( "type" )
-            signIn.isSuccess = responseObject.getString( "isSuccess" ) === "sucess"
+            signIn.isSuccess = responseObject.getString( "isSuccess" ) === "success"
 
             return signIn
         }
