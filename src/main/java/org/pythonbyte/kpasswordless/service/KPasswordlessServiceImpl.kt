@@ -77,7 +77,6 @@ class KPasswordlessServiceImpl : KPasswordlessService {
 
     override fun deleteCredentials(privateKey: String, credentialId: String): Boolean {
         val request = buildRequest("$baseUrl/credentials/delete", generateHeaders( privateKey), createPostBody( mapOf( "credentialId" to credentialId ) ) )
-
         val response = sendRequest( request )
 
         if ( response.code() == 200 ) {
