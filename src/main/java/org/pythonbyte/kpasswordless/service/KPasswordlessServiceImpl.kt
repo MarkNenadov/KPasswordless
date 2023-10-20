@@ -35,9 +35,8 @@ class KPasswordlessServiceImpl : KPasswordlessService {
         )
         val response = sendRequest( request )
 
-        if ( response.code() == 200 ) {
-            val responseObject = JsonObject( JSONObject( response.body().string().trim() ))
-            return responseObject.getString("token")
+        if ( response.isOk() ) {
+            return response.getJsonObject().getString("token")
         }
         throw KpasswordlessServiceException(response, "Register token")
     }
@@ -51,7 +50,7 @@ class KPasswordlessServiceImpl : KPasswordlessService {
 
         val response = sendRequest( request )
 
-        if ( response.code() == 200 ) {
+        if ( response.isOk() ) {
             return true
         }
         throw KpasswordlessServiceException(response, "Add alias")
@@ -65,10 +64,8 @@ class KPasswordlessServiceImpl : KPasswordlessService {
         )
         val response = sendRequest( request )
 
-        if ( response.code() == 200 ) {
-            val responseObject = JsonObject( JSONObject( response.body().string().trim() ))
-
-            return KPasswordlessSignIn.create(  responseObject )
+        if ( response.isOk() ) {
+            return KPasswordlessSignIn.create(  response.getJsonObject() )
         }
 
         throw KpasswordlessServiceException(response, "Sign in verify")
@@ -78,11 +75,8 @@ class KPasswordlessServiceImpl : KPasswordlessService {
         val request = buildRequest( "$baseUrl/credentials/list?userId=${identity.userId}", generateHeaders( privateKey ), createPostBody( mapOf( "userId" to identity.userId )  ) )
         val response = sendRequest( request )
 
-        if ( response.code() == 200 ) {
-            val responseJson = response.body().string().trim()
-            val responseObject = JsonObject( JSONObject(responseJson))
-
-            return KPasswordlessCredential.createList( responseObject.getArray("values") )
+        if ( response.isOk() ) {
+            return KPasswordlessCredential.createList( response.getJsonObject().getArray("values") )
         }
 
         throw KpasswordlessServiceException(response, "List credentials")
@@ -92,7 +86,7 @@ class KPasswordlessServiceImpl : KPasswordlessService {
         val request = buildRequest("$baseUrl/credentials/delete", generateHeaders( privateKey), createPostBody( mapOf( "credentialId" to credentialId ) ) )
         val response = sendRequest( request )
 
-        if ( response.code() == 200 ) {
+        if ( response.isOk() ) {
             return true
         }
 
