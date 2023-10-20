@@ -6,6 +6,7 @@ import org.pythonbyte.kpasswordless.domain.KPasswordlessIdentity
 import org.pythonbyte.kpasswordless.domain.KPasswordlessSignIn
 import org.pythonbyte.kpasswordless.domain.KPasswordlessCredential
 import org.pythonbyte.kpasswordless.service.exceptions.KpasswordlessServiceException
+import org.pythonbyte.krux.http.MediaTypes
 import org.pythonbyte.krux.http.buildRequest
 import org.pythonbyte.krux.json.JsonObject
 import org.pythonbyte.krux.properties.PropertyReader
@@ -23,11 +24,15 @@ class KPasswordlessServiceImpl : KPasswordlessService {
     private fun createPostBody( bodyMap: Map<String, Any> ) : RequestBody {
         val jsonContent = JsonObject( JSONObject( bodyMap ) ).toString()
 
-        return RequestBody.create( MediaType.parse( "application/json; charset=utf-8"), jsonContent)
+        return RequestBody.create( MediaTypes.UTF_JSON, jsonContent)
     }
 
     override fun registerToken( privateKey: String, identity: KPasswordlessIdentity): String {
-        val request = buildRequest( "$baseUrl/register/token", generateHeaders( privateKey ), createPostBody( identity.map() ) )
+        val request = buildRequest(
+            "$baseUrl/register/token",
+            generateHeaders( privateKey ),
+            createPostBody( identity.map() )
+        )
         val response = sendRequest( request )
 
         if ( response.code() == 200 ) {
@@ -38,7 +43,11 @@ class KPasswordlessServiceImpl : KPasswordlessService {
     }
 
     override fun addAliases( privateKey: String, identity: KPasswordlessIdentity, aliases: List<String>): Boolean {
-        val request = buildRequest("$baseUrl/alias", generateHeaders( privateKey), createPostBody( mapOf( "userId" to identity.userId, "aliases" to aliases ) ) )
+        val request = buildRequest(
+            "$baseUrl/alias",
+            generateHeaders( privateKey),
+            createPostBody( mapOf( "userId" to identity.userId, "aliases" to aliases ) )
+        )
 
         val response = sendRequest( request )
 
@@ -49,7 +58,11 @@ class KPasswordlessServiceImpl : KPasswordlessService {
     }
 
     override fun signin( privateKey: String, token: String ): KPasswordlessSignIn {
-        val request = buildRequest( "$baseUrl/signin/verify", generateHeaders( privateKey ), createPostBody( mapOf( "token" to token ) ) )
+        val request = buildRequest(
+            "$baseUrl/signin/verify",
+            generateHeaders( privateKey ),
+            createPostBody( mapOf( "token" to token ) )
+        )
         val response = sendRequest( request )
 
         if ( response.code() == 200 ) {
