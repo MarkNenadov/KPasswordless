@@ -13,19 +13,19 @@ class KPasswordlessCredential {
 
     companion object {
         private fun create(jsonObject: JsonObject): KPasswordlessCredential {
-            val credential = KPasswordlessCredential()
+            val credential = KPasswordlessCredential().apply {
+                val descriptorObject = jsonObject.getObject("descriptor")
+                id = descriptorObject.getString("id")
+                type = descriptorObject.getString("type")
 
-            val descriptorObject = jsonObject.getObject("descriptor")
-            credential.id = descriptorObject.getString("id")
-            credential.type = descriptorObject.getString( "type" )
+                publicKey = jsonObject.getString("publicKey")
+                userHandle = jsonObject.getString("userHandle")
+                origin = jsonObject.getString("origin")
+                country = jsonObject.getString("country")
+                device = jsonObject.getString("device")
+            }
 
-            credential.publicKey = jsonObject.getString("publicKey")
-            credential.userHandle = jsonObject.getString("userHandle")
-            credential.origin = jsonObject.getString("origin")
-            credential.country = jsonObject.getString("country")
-            credential.device = jsonObject.getString("device")
-
-            return credential;
+            return credential
         }
 
         fun createList(array: List<JsonObject>): List<KPasswordlessCredential> {

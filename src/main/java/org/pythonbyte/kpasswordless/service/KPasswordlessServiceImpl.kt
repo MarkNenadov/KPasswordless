@@ -18,7 +18,10 @@ class KPasswordlessServiceImpl : KPasswordlessService {
     private val baseUrl = propertyReader.get("kpasswordless.baseUrl")
 
     private fun generateHeaders( privateKey: String ): Headers {
-        return Headers.Builder().add( "ApiSecret", privateKey ).add( "Content-Type", "application/json" ).build()
+        return Headers.Builder()
+                .add( "ApiSecret", privateKey )
+                .add( "Content-Type", "application/json" )
+                .build()
     }
 
     private fun createPostBody( bodyMap: Map<String, Any> ) : RequestBody {
@@ -83,7 +86,11 @@ class KPasswordlessServiceImpl : KPasswordlessService {
     }
 
     override fun deleteCredentials(privateKey: String, credentialId: String): Boolean {
-        val request = buildRequest("$baseUrl/credentials/delete", generateHeaders( privateKey), createPostBody( mapOf( "credentialId" to credentialId ) ) )
+        val request = buildRequest(
+            "$baseUrl/credentials/delete",
+            generateHeaders( privateKey),
+            createPostBody( mapOf( "credentialId" to credentialId ) )
+        )
         val response = sendRequest( request )
 
         if ( response.isOk() ) {
