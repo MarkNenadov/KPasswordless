@@ -18,21 +18,20 @@ class KPasswordlessSignIn {
     companion object {
         fun create(responseObject: JsonObject): KPasswordlessSignIn {
             val signIn = KPasswordlessSignIn().apply {
-                timestamp = responseObject.getString( "timestamp" )
-                device = responseObject.getString( "device" )
-                country = responseObject.getString( "country" )
-                credentialId = responseObject.getString( "CredentialId" )
-                userId = responseObject.getString( "userId" )
-                rpId = responseObject.getString( "rpid" )
-                expiresAt = responseObject.getString( "expiresAt" )
-                origin = responseObject.getString( "origin" )
-                nickname = responseObject.getString( "nickname" )
-                type = responseObject.getString( "type" )
-                isSuccess = responseObject.getString( "isSuccess" ) == "success"
+                timestamp = responseObject.getString("timestamp")
+                device = responseObject.getString("device")
+                country = responseObject.getString("country")
+                credentialId = responseObject.getString("CredentialId")
+                userId = responseObject.getString("userId")
+                rpId = responseObject.getString("rpid")
+                expiresAt = responseObject.getString("expiresAt")
+                origin = responseObject.getString("origin")
+                nickname = responseObject.getString("nickname")
+                type = responseObject.getString("type")
+                isSuccess = responseObject.getString("isSuccess") == "success"
             }
 
             return signIn
         }
     }
-
 }

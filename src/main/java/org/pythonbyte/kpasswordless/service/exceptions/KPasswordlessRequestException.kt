@@ -1,6 +1,5 @@
 package org.pythonbyte.kpasswordless.service.exceptions
 
-import com.squareup.okhttp.Response;
 import org.pythonbyte.krux.http.HttpResponse
 
 class KpasswordlessServiceException(response: HttpResponse, requestAlias: String) : RuntimeException() {

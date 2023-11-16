@@ -29,7 +29,7 @@ class KPasswordlessCredential {
         }
 
         fun createList(array: List<JsonObject>): List<KPasswordlessCredential> {
-            return array.map { jsonObject -> create( jsonObject ) }
+            return array.map { jsonObject -> create(jsonObject) }
         }
     }
 }

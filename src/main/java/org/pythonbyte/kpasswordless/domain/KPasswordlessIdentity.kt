@@ -6,6 +6,6 @@ class KPasswordlessIdentity {
     var displayName = ""
 
     fun map(): Map<String, String> {
-        return mapOf( "userId" to userId, "username" to userName, "displayname" to displayName )
+        return mapOf("userId" to userId, "username" to userName, "displayname" to displayName)
     }
 }
