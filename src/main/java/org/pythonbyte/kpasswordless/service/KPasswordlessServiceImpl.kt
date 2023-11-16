@@ -18,10 +18,10 @@ class KPasswordlessServiceImpl : KPasswordlessService {
     private val baseUrl = propertyReader.get("kpasswordless.baseUrl")
 
     private fun generateHeaders( privateKey: String ): Headers {
-        return Headers.Builder()
-                .add( "ApiSecret", privateKey )
-                .add( "Content-Type", "application/json" )
-                .build()
+        return Headers.Builder().apply {
+            add("ApiSecret", privateKey)
+            add("Content-Type", "application/json")
+        }.build()
     }
 
     private fun createPostBody( bodyMap: Map<String, Any> ) : RequestBody {
@@ -38,10 +38,11 @@ class KPasswordlessServiceImpl : KPasswordlessService {
         )
         val response = sendRequest( request )
 
-        if ( response.isOk() ) {
-            return response.getJsonObject().getString("token")
+        return if (response.isOk()) {
+            response.getJsonObject().getString("token")
+        } else {
+            throw KpasswordlessServiceException(response, "Register token")
         }
-        throw KpasswordlessServiceException(response, "Register token")
     }
 
     override fun addAliases( privateKey: String, identity: KPasswordlessIdentity, aliases: List<String>): Boolean {
@@ -53,10 +54,11 @@ class KPasswordlessServiceImpl : KPasswordlessService {
 
         val response = sendRequest( request )
 
-        if ( response.isOk() ) {
-            return true
+        return if ( response.isOk() ) {
+            true
+        } else {
+            throw KpasswordlessServiceException(response, "Add alias")
         }
-        throw KpasswordlessServiceException(response, "Add alias")
     }
 
     override fun signin( privateKey: String, token: String ): KPasswordlessSignIn {
@@ -67,22 +69,22 @@ class KPasswordlessServiceImpl : KPasswordlessService {
         )
         val response = sendRequest( request )
 
-        if ( response.isOk() ) {
-            return KPasswordlessSignIn.create(  response.getJsonObject() )
+        return if ( response.isOk() ) {
+            KPasswordlessSignIn.create(  response.getJsonObject() )
+        } else {
+            throw KpasswordlessServiceException(response, "Sign in verify")
         }
-
-        throw KpasswordlessServiceException(response, "Sign in verify")
     }
 
     override fun listCredentials( privateKey: String, identity: KPasswordlessIdentity ): List<KPasswordlessCredential> {
         val request = buildRequest( "$baseUrl/credentials/list?userId=${identity.userId}", generateHeaders( privateKey ), createPostBody( mapOf( "userId" to identity.userId )  ) )
         val response = sendRequest( request )
 
-        if ( response.isOk() ) {
-            return KPasswordlessCredential.createList( response.getJsonObject().getArray("values") )
+        return if ( response.isOk() ) {
+            KPasswordlessCredential.createList( response.getJsonObject().getArray("values") )
+        } else {
+            throw KpasswordlessServiceException(response, "List credentials")
         }
-
-        throw KpasswordlessServiceException(response, "List credentials")
     }
 
     override fun deleteCredentials(privateKey: String, credentialId: String): Boolean {
@@ -93,11 +95,10 @@ class KPasswordlessServiceImpl : KPasswordlessService {
         )
         val response = sendRequest( request )
 
-        if ( response.isOk() ) {
-            return true
+        return if ( response.isOk() ) {
+            true
+        } else {
+            throw KpasswordlessServiceException(response, "Delete credentials")
         }
-
-        throw KpasswordlessServiceException(response, "Delete credentials")
     }
-
 }
