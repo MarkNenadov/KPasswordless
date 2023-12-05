@@ -1,5 +1,3 @@
 package org.pythonbyte.kpasswordless.service
 
-class KPasswordlessServiceTest {
-
-}
+class KPasswordlessServiceTest

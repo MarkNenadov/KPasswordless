@@ -13,17 +13,21 @@ class KPasswordlessCredential {
 
     companion object {
         private fun create(jsonObject: JsonObject): KPasswordlessCredential {
-            val credential = KPasswordlessCredential().apply {
-                val descriptorObject = jsonObject.getObject("descriptor")
-                id = descriptorObject.getString("id")
-                type = descriptorObject.getString("type")
+            val credential =
+                KPasswordlessCredential().apply {
+                    jsonObject.getObject("descriptor").let {
+                        id = it.getString("id")
+                        type = it.getString("type")
+                    }
 
-                publicKey = jsonObject.getString("publicKey")
-                userHandle = jsonObject.getString("userHandle")
-                origin = jsonObject.getString("origin")
-                country = jsonObject.getString("country")
-                device = jsonObject.getString("device")
-            }
+                    with(jsonObject) {
+                        publicKey = getString("publicKey")
+                        userHandle = getString("userHandle")
+                        origin = getString("origin")
+                        country = getString("country")
+                        device = getString("device")
+                    }
+                }
 
             return credential
         }
