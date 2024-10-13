@@ -15,12 +15,12 @@ class KPasswordlessCredential {
         private fun create(jsonObject: JsonObject): KPasswordlessCredential {
             val credential =
                 KPasswordlessCredential().apply {
-                    jsonObject.getObject("descriptor").let {
-                        id = it.getString("id")
-                        type = it.getString("type")
-                    }
-
                     with(jsonObject) {
+                        getObject("descriptor").let {
+                            id = it.getString("id")
+                            type = it.getString("type")
+                        }
+
                         publicKey = getString("publicKey")
                         userHandle = getString("userHandle")
                         origin = getString("origin")
