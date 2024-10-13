@@ -51,3 +51,13 @@ interface KpasswordlessService {
 
 Runtime Exceptions:
 * KpasswordlessServiceException
+
+## Tech
+
+Kotlin, IntelliJ, Maven
+
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=kotlin,idea,maven" />
+  </a>
+</p>
