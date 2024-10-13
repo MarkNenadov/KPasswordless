@@ -1,16 +1,13 @@
 package org.pythonbyte.kpasswordless.service
 
 import com.squareup.okhttp.Headers
-import com.squareup.okhttp.RequestBody
-import org.json.JSONObject
 import org.pythonbyte.kpasswordless.domain.KPasswordlessCredential
 import org.pythonbyte.kpasswordless.domain.KPasswordlessIdentity
 import org.pythonbyte.kpasswordless.domain.KPasswordlessSignIn
 import org.pythonbyte.kpasswordless.service.exceptions.KPasswordlessServiceException
-import org.pythonbyte.krux.http.MediaTypes
 import org.pythonbyte.krux.http.buildRequest
+import org.pythonbyte.krux.http.createPostBody
 import org.pythonbyte.krux.http.sendRequest
-import org.pythonbyte.krux.json.JsonObject
 import org.pythonbyte.krux.properties.PropertyReader
 
 class KPasswordlessServiceImpl : KPasswordlessService {
@@ -23,12 +20,6 @@ class KPasswordlessServiceImpl : KPasswordlessService {
             add("ApiSecret", privateKey)
             add("Content-Type", "application/json")
         }.build()
-    }
-
-    private fun createPostBody(bodyMap: Map<String, Any>): RequestBody {
-        val jsonContent = JsonObject(JSONObject(bodyMap)).toString()
-
-        return RequestBody.create(MediaTypes.UTF_JSON, jsonContent)
     }
 
     override fun registerToken(
