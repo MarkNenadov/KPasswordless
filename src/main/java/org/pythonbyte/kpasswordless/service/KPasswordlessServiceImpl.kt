@@ -1,6 +1,6 @@
 package org.pythonbyte.kpasswordless.service
 
-import com.squareup.okhttp.Headers
+import okhttp3.Headers
 import org.pythonbyte.kpasswordless.domain.KPasswordlessCredential
 import org.pythonbyte.kpasswordless.domain.KPasswordlessIdentity
 import org.pythonbyte.kpasswordless.domain.KPasswordlessSignIn
