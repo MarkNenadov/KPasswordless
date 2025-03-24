@@ -5,6 +5,7 @@ import org.pythonbyte.kpasswordless.domain.KPasswordlessCredential
 import org.pythonbyte.kpasswordless.domain.KPasswordlessIdentity
 import org.pythonbyte.kpasswordless.domain.KPasswordlessSignIn
 import org.pythonbyte.kpasswordless.service.exceptions.KPasswordlessServiceException
+import org.pythonbyte.krux.http.buildHeaders
 import org.pythonbyte.krux.http.buildRequest
 import org.pythonbyte.krux.http.createPostBody
 import org.pythonbyte.krux.http.sendRequest
@@ -16,10 +17,12 @@ class KPasswordlessServiceImpl : KPasswordlessService {
     private val baseUrl = propertyReader.get("kpasswordless.baseUrl")
 
     private fun generateHeaders(privateKey: String): Headers {
-        return Headers.Builder().apply {
-            add("ApiSecret", privateKey)
-            add("Content-Type", "application/json")
-        }.build()
+        return buildHeaders(
+            mapOf(
+                "ApiSecret" to privateKey,
+                "Content-Type" to "application/json"
+            )
+        )
     }
 
     override fun registerToken(
